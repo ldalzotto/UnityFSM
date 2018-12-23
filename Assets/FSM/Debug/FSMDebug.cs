@@ -56,5 +56,10 @@ namespace FromChallenge
             _streamWriter.WriteLine(line);
         }
 
+        public void Write(string content)
+        {
+            _streamWriter.Write(content);
+        }
+
     }
 }

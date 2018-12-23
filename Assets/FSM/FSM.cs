@@ -11,43 +11,105 @@ namespace FromChallenge
         private void Start()
         {
             FSMEngine.Instance.AddFSM(this);
-            ChangeState(StartingFSMState, false);
+            try
+            {
+                ChangeState(StartingFSMState, false);
+            }
+            catch (FSMActionProcessingError e)
+            {
+#if FSM_DEBUG
+                FSMDebugHelper.FSMActionProcessError(this, e);
+#endif
+            }
+            catch (FSMTransitionProcessingError e)
+            {
+#if FSM_DEBUG
+                FSMDebugHelper.FSMTransitionProcessError(this, e);
+#endif
+            }
         }
 
         public void OnUpdate(bool IsFixedUpdateExecuted)
         {
-            var transitionTriggered = CurrentFSMState.OnUpdate();
-            if (transitionTriggered != null)
+            try
+            {
+                var transitionTriggered = CurrentFSMState.OnUpdate();
+                if (transitionTriggered != null)
+                {
+#if FSM_DEBUG
+                    FSMDebugHelper.FSMTransitionSuccessful(this, transitionTriggered, "Update");
+#endif
+                    ChangeState(transitionTriggered.StateToMove, IsFixedUpdateExecuted);
+                }
+            }
+            catch (FSMActionProcessingError e)
             {
 #if FSM_DEBUG
-                FSMDebugHelper.FSMTransitionSuccessful(this, transitionTriggered, "Update");
+                FSMDebugHelper.FSMActionProcessError(this, e);
 #endif
-                ChangeState(transitionTriggered.StateToMove, IsFixedUpdateExecuted);
             }
+            catch (FSMTransitionProcessingError e)
+            {
+#if FSM_DEBUG
+                FSMDebugHelper.FSMTransitionProcessError(this, e);
+#endif
+            }
+
         }
 
         public void OnFixedUpdate()
         {
-            var transitionTriggered = CurrentFSMState.OnFixedUpdate();
-            if (transitionTriggered != null)
+            try
+            {
+                var transitionTriggered = CurrentFSMState.OnFixedUpdate();
+                if (transitionTriggered != null)
+                {
+#if FSM_DEBUG
+                    FSMDebugHelper.FSMTransitionSuccessful(this, transitionTriggered, "FixedUpdate");
+#endif
+                    ChangeState(transitionTriggered.StateToMove, true);
+                }
+            }
+            catch (FSMActionProcessingError e)
             {
 #if FSM_DEBUG
-                FSMDebugHelper.FSMTransitionSuccessful(this, transitionTriggered, "FixedUpdate");
+                FSMDebugHelper.FSMActionProcessError(this, e);
 #endif
-                ChangeState(transitionTriggered.StateToMove, true);
+            }
+            catch (FSMTransitionProcessingError e)
+            {
+#if FSM_DEBUG
+                FSMDebugHelper.FSMTransitionProcessError(this, e);
+#endif
             }
         }
 
         public void OnLateUpdate(bool IsFixedUpdateExecuted)
         {
-            var transitionTriggered = CurrentFSMState.OnLateUpdate();
-            if (transitionTriggered != null)
+            try
+            {
+                var transitionTriggered = CurrentFSMState.OnLateUpdate();
+                if (transitionTriggered != null)
+                {
+#if FSM_DEBUG
+                    FSMDebugHelper.FSMTransitionSuccessful(this, transitionTriggered, "LateUpdate");
+#endif
+                    ChangeState(transitionTriggered.StateToMove, IsFixedUpdateExecuted);
+                }
+            }
+            catch (FSMActionProcessingError e)
             {
 #if FSM_DEBUG
-                FSMDebugHelper.FSMTransitionSuccessful(this, transitionTriggered, "LateUpdate");
+                FSMDebugHelper.FSMActionProcessError(this, e);
 #endif
-                ChangeState(transitionTriggered.StateToMove, IsFixedUpdateExecuted);
             }
+            catch (FSMTransitionProcessingError e)
+            {
+#if FSM_DEBUG
+                FSMDebugHelper.FSMTransitionProcessError(this, e);
+#endif
+            }
+
         }
 
         private void OnDestroy()

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace FromChallenge
 {
@@ -41,7 +42,16 @@ namespace FromChallenge
             {
                 foreach (var FSMAction in FSMExitActions)
                 {
-                    FSMAction.FSMAction.ExecuteAction();
+                    try
+                    {
+                        FSMAction.FSMAction.ExecuteAction();
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogException(e, this);
+                        throw FSMActionProcessingError.FromDetailedExecutionInformation(FSMAction.GetType().ToString(), e);
+                    }
+
                 }
             }
         }
@@ -52,7 +62,16 @@ namespace FromChallenge
             {
                 foreach (var FSMAction in FSMActions)
                 {
-                    FSMAction.ExecuteAction();
+                    try
+                    {
+                        FSMAction.ExecuteAction();
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogException(e, this);
+                        throw FSMActionProcessingError.FromDetailedExecutionInformation(FSMAction.GetType().ToString(), e);
+                    }
+
                 }
 
                 if (FSMActions.Length > 0)
@@ -70,7 +89,16 @@ namespace FromChallenge
             {
                 foreach (var FSMAction in FSMActions)
                 {
-                    FSMAction.FSMAction.ExecuteAction();
+                    try
+                    {
+                        FSMAction.FSMAction.ExecuteAction();
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogException(e, this);
+                        throw FSMActionProcessingError.FromDetailedExecutionInformation(FSMAction.GetType().ToString(), e);
+                    }
+
                     if (FSMAction.ComputeTransitionConditions)
                     {
                         var stateToMove = ProcessTransitions();
@@ -95,10 +123,19 @@ namespace FromChallenge
         {
             foreach (var FSMTransition in FSMTransitions)
             {
-                if (FSMTransition.ComputeTransition())
+                try
                 {
-                    return FSMTransition;
+                    if (FSMTransition.ComputeTransition())
+                    {
+                        return FSMTransition;
+                    }
                 }
+                catch (Exception e)
+                {
+                    Debug.LogException(e, this);
+                    throw FSMTransitionProcessingError.FromDetailedExecutionInformation(FSMTransition.GetType().ToString(), e);
+                }
+
             }
             return null;
         }
