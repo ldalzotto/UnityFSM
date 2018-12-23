@@ -33,7 +33,6 @@ public class TableTest : MonoBehaviour
             AccessDictionary(randomAccessArray[i]);
             AccessTable(randomAccessArray[i]);
         }
-
     }
 
     public void PopulateRawTable()

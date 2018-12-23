@@ -568,6 +568,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a3290b5d6f70c46b1d4fc3ab2a8b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FSMDebugConfiguration: {fileID: 11400000, guid: 9b89ed168c195ef4bb7059301954ac03,
+    type: 2}
 --- !u!4 &1091024238
 Transform:
   m_ObjectHideFlags: 0

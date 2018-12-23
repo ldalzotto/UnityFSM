@@ -37,8 +37,6 @@ namespace FromChallenge
 
         public void OnExit()
         {
-            //  Debug.Log("Exiting : " + gameObject.name);
-
             if (FSMExitActions != null)
             {
                 foreach (var FSMAction in FSMExitActions)

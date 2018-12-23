@@ -45,9 +45,15 @@ namespace FromChallenge
             if (CurrentFSMState != null)
             {
                 CurrentFSMState.OnExit();
+#if FSM_DEBUG
+                FSMDebugHelper.ExitingStateLog(this, CurrentFSMState);
+#endif
             }
             CurrentFSMState = newState;
 
+#if FSM_DEBUG
+            FSMDebugHelper.EnterStateLog(this, newState);
+#endif
             var onEnterSwitchState = CurrentFSMState.OnEnter();
             if (onEnterSwitchState != null)
             {
