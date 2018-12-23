@@ -41,7 +41,9 @@ namespace FromChallenge
 
         private void InitializeLog()
         {
+#if FSM_DEBUG
             FSMDebug.Instance.Initialize(FSMDebugConfiguration);
+#endif
         }
     }
 }

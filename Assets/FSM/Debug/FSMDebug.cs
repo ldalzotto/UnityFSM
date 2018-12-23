@@ -39,7 +39,7 @@ namespace FromChallenge
 
         private void CreateFileIfNotExists()
         {
-            if (File.Exists(_absoluteLogPath))
+            if (!File.Exists(_absoluteLogPath))
             {
                 var fs = File.Create(_absoluteLogPath);
                 fs.Dispose();

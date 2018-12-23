@@ -11,9 +11,18 @@ namespace FromChallenge
             FormatAndWriteLine("Entering in state : " + NewState.name, FSM);
         }
 
+        /**
+
         public static void ExitingStateLog(FSM FSM, FSMState ExitState)
         {
             FormatAndWriteLine("Exit state : " + ExitState.name, FSM);
+        }
+
+    **/
+
+        public static void FSMTransitionSuccessful(FSM FSM, FSMTransition FSMTransition, string WorkflowCallname)
+        {
+            FormatAndWriteLine("The transition : " + FSMTransition.GetType().ToString() + " has responded positively when " + WorkflowCallname + " was called. Switching to state : " + FSMTransition.StateToMove.name, FSM);
         }
 
         private static void FormatAndWriteLine(string line, FSM FSM)

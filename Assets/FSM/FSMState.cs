@@ -7,7 +7,7 @@ namespace FromChallenge
         public bool UpdateTheSameFrameOfEnter;
         public bool FixedUpdateTheSameFrameOfEnter;
 
-        public FSMActionWithConfiguration[] FSMEnterActions;
+        public FSMAction[] FSMEnterActions;
         public FSMActionWithConfiguration[] FSMUpdateActions;
         public FSMActionWithConfiguration[] FSMFixedActions;
         public FSMActionWithConfiguration[] FSMLateUpdateActions;
@@ -15,24 +15,24 @@ namespace FromChallenge
 
         public FSMTransition[] FSMTransitions;
 
-        public FSMState OnEnter()
+        public FSMTransition OnEnter()
         {
-            return ProcessActionArrayWithTransitions(FSMEnterActions);
+            return ProcessActionArrayWithTransition(FSMEnterActions);
         }
 
-        public FSMState OnUpdate()
+        public FSMTransition OnUpdate()
         {
-            return ProcessActionArrayWithTransitions(FSMUpdateActions);
+            return ProcessActionWithConfigurationArrayWithTransitions(FSMUpdateActions);
         }
 
-        public FSMState OnFixedUpdate()
+        public FSMTransition OnFixedUpdate()
         {
-            return ProcessActionArrayWithTransitions(FSMFixedActions);
+            return ProcessActionWithConfigurationArrayWithTransitions(FSMFixedActions);
         }
 
-        public FSMState OnLateUpdate()
+        public FSMTransition OnLateUpdate()
         {
-            return ProcessActionArrayWithTransitions(FSMLateUpdateActions);
+            return ProcessActionWithConfigurationArrayWithTransitions(FSMLateUpdateActions);
         }
 
         public void OnExit()
@@ -46,7 +46,25 @@ namespace FromChallenge
             }
         }
 
-        private FSMState ProcessActionArrayWithTransitions(FSMActionWithConfiguration[] FSMActions)
+        private FSMTransition ProcessActionArrayWithTransition(FSMAction[] FSMActions)
+        {
+            if (FSMActions != null)
+            {
+                foreach (var FSMAction in FSMActions)
+                {
+                    FSMAction.ExecuteAction();
+                }
+
+                if (FSMActions.Length > 0)
+                {
+                    return ProcessTransitions();
+                }
+            }
+
+            return null;
+        }
+
+        private FSMTransition ProcessActionWithConfigurationArrayWithTransitions(FSMActionWithConfiguration[] FSMActions)
         {
             if (FSMActions != null)
             {
@@ -73,14 +91,13 @@ namespace FromChallenge
         }
 
 
-        private FSMState ProcessTransitions()
+        private FSMTransition ProcessTransitions()
         {
             foreach (var FSMTransition in FSMTransitions)
             {
                 if (FSMTransition.ComputeTransition())
                 {
-                    //    Debug.Log("Transition : " + FSMTransition.GetType().ToString() + " has responded positively. Switching to " + FSMTransition.StateToMove.gameObject.name);
-                    return FSMTransition.StateToMove;
+                    return FSMTransition;
                 }
             }
             return null;

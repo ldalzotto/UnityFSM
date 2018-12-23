@@ -16,17 +16,38 @@ namespace FromChallenge
 
         public void OnUpdate(bool IsFixedUpdateExecuted)
         {
-            ChangeState(CurrentFSMState.OnUpdate(), IsFixedUpdateExecuted);
+            var transitionTriggered = CurrentFSMState.OnUpdate();
+            if (transitionTriggered != null)
+            {
+#if FSM_DEBUG
+                FSMDebugHelper.FSMTransitionSuccessful(this, transitionTriggered, "Update");
+#endif
+                ChangeState(transitionTriggered.StateToMove, IsFixedUpdateExecuted);
+            }
         }
 
         public void OnFixedUpdate()
         {
-            ChangeState(CurrentFSMState.OnFixedUpdate(), true);
+            var transitionTriggered = CurrentFSMState.OnFixedUpdate();
+            if (transitionTriggered != null)
+            {
+#if FSM_DEBUG
+                FSMDebugHelper.FSMTransitionSuccessful(this, transitionTriggered, "FixedUpdate");
+#endif
+                ChangeState(transitionTriggered.StateToMove, true);
+            }
         }
 
         public void OnLateUpdate(bool IsFixedUpdateExecuted)
         {
-            ChangeState(CurrentFSMState.OnLateUpdate(), IsFixedUpdateExecuted);
+            var transitionTriggered = CurrentFSMState.OnLateUpdate();
+            if (transitionTriggered != null)
+            {
+#if FSM_DEBUG
+                FSMDebugHelper.FSMTransitionSuccessful(this, transitionTriggered, "LateUpdate");
+#endif
+                ChangeState(transitionTriggered.StateToMove, IsFixedUpdateExecuted);
+            }
         }
 
         private void OnDestroy()
@@ -37,7 +58,7 @@ namespace FromChallenge
 
         private void ChangeState(FSMState newState, bool IsFixedUpdateExecuted)
         {
-            if (newState == null || newState == CurrentFSMState)
+            if (newState == CurrentFSMState)
             {
                 return;
             }
@@ -45,19 +66,19 @@ namespace FromChallenge
             if (CurrentFSMState != null)
             {
                 CurrentFSMState.OnExit();
-#if FSM_DEBUG
-                FSMDebugHelper.ExitingStateLog(this, CurrentFSMState);
-#endif
             }
             CurrentFSMState = newState;
 
 #if FSM_DEBUG
             FSMDebugHelper.EnterStateLog(this, newState);
 #endif
-            var onEnterSwitchState = CurrentFSMState.OnEnter();
-            if (onEnterSwitchState != null)
+            var transitionTriggered = CurrentFSMState.OnEnter();
+            if (transitionTriggered != null)
             {
-                ChangeState(onEnterSwitchState, IsFixedUpdateExecuted);
+#if FSM_DEBUG
+                FSMDebugHelper.FSMTransitionSuccessful(this, transitionTriggered, "Enter");
+#endif
+                ChangeState(transitionTriggered.StateToMove, IsFixedUpdateExecuted);
             }
             else
             {

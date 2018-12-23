@@ -300,8 +300,7 @@ MonoBehaviour:
   UpdateTheSameFrameOfEnter: 0
   FixedUpdateTheSameFrameOfEnter: 0
   FSMEnterActions:
-  - FSMAction: {fileID: 655365830}
-    ComputeTransitionConditions: 0
+  - {fileID: 655365830}
   FSMUpdateActions:
   - FSMAction: {fileID: 655365829}
     ComputeTransitionConditions: 0
@@ -430,10 +429,8 @@ MonoBehaviour:
   UpdateTheSameFrameOfEnter: 0
   FixedUpdateTheSameFrameOfEnter: 0
   FSMEnterActions:
-  - FSMAction: {fileID: 715757446}
-    ComputeTransitionConditions: 1
-  - FSMAction: {fileID: 715757443}
-    ComputeTransitionConditions: 0
+  - {fileID: 715757446}
+  - {fileID: 715757443}
   FSMUpdateActions:
   - FSMAction: {fileID: 715757442}
     ComputeTransitionConditions: 0
@@ -662,8 +659,7 @@ MonoBehaviour:
   UpdateTheSameFrameOfEnter: 0
   FixedUpdateTheSameFrameOfEnter: 0
   FSMEnterActions:
-  - FSMAction: {fileID: 1529739830}
-    ComputeTransitionConditions: 0
+  - {fileID: 1529739830}
   FSMUpdateActions: []
   FSMFixedActions: []
   FSMLateUpdateActions: []
