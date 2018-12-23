@@ -4,7 +4,6 @@ namespace FromChallenge
 {
     public class FSMEngineBehaviorProxy : MonoBehaviour
     {
-
         private void Update()
         {
             FSMEngine.Instance.UpdateAll();

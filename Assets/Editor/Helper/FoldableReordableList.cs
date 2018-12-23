@@ -9,7 +9,7 @@ namespace FromChallenge
 
         private bool displayed;
 
-        public FoldableReordableList(SerializedObject sObject, SerializedProperty sProperty, bool draggable, bool displayHeader, bool displayAddButton, bool displayRemovebutton, string listTitle, ElementCallbackDelegate elementCallbackDelegate)
+        public FoldableReordableList(SerializedObject sObject, SerializedProperty sProperty, bool draggable, bool displayHeader, bool displayAddButton, bool displayRemovebutton, string listTitle, float elementHeightFactor, ElementCallbackDelegate elementCallbackDelegate)
                : base(sObject, sProperty, draggable, displayHeader, displayAddButton, displayRemovebutton)
         {
             this.drawHeaderCallback = (Rect rect) =>
@@ -30,7 +30,7 @@ namespace FromChallenge
             {
                 if (displayed)
                 {
-                    return elementHeight;
+                    return elementHeight * elementHeightFactor;
                 }
                 else
                 {

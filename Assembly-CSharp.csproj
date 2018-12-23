@@ -60,10 +60,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\FSM\Engine\FSMEngine.cs" />
+    <Compile Include="Assets\FSM\Engine\FSMEngineBehaviorProxy.cs" />
     <Compile Include="Assets\FSM\FSM.cs" />
     <Compile Include="Assets\FSM\FSMAction.cs" />
-    <Compile Include="Assets\FSM\FSMEngine.cs" />
-    <Compile Include="Assets\FSM\FSMEngineBehaviorProxy.cs" />
     <Compile Include="Assets\FSM\FSMState.cs" />
     <Compile Include="Assets\FSM\FSMTransition.cs" />
     <Compile Include="Assets\FSM\FSMVariableContainer.cs" />

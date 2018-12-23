@@ -29,6 +29,7 @@ namespace FromChallenge
         }
 
         private List<FSM> FSMContainer = new List<FSM>();
+        private bool IsFixedUpdateExecuted;
 
         public void AddFSM(FSM FSM)
         {
@@ -40,28 +41,32 @@ namespace FromChallenge
             FSMContainer.Remove(FSM);
         }
 
-        public void UpdateAll()
-        {
-            foreach (var FSM in FSMContainer)
-            {
-                FSM.OnUpdate();
-            }
-        }
-
         public void FixedUpdateAll()
         {
+            IsFixedUpdateExecuted = true;
             foreach (var FSM in FSMContainer)
             {
                 FSM.OnFixedUpdate();
             }
         }
 
+        public void UpdateAll()
+        {
+            foreach (var FSM in FSMContainer)
+            {
+                FSM.OnUpdate(IsFixedUpdateExecuted);
+            }
+        }
+
+
         public void LateUpdateAll()
         {
             foreach (var FSM in FSMContainer)
             {
-                FSM.OnLateUpdate();
+                FSM.OnLateUpdate(IsFixedUpdateExecuted);
             }
+
+            IsFixedUpdateExecuted = false;
         }
 
     }

@@ -11,22 +11,22 @@ namespace FromChallenge
         private void Awake()
         {
             FSMEngine.Instance.AddFSM(this);
-            ChangeState(StartingFSMState);
+            ChangeState(StartingFSMState, false);
         }
 
-        public void OnUpdate()
+        public void OnUpdate(bool IsFixedUpdateExecuted)
         {
-            ChangeState(CurrentFSMState.OnUpdate());
+            ChangeState(CurrentFSMState.OnUpdate(), IsFixedUpdateExecuted);
         }
 
         public void OnFixedUpdate()
         {
-            CurrentFSMState.OnLateUpdate();
+            ChangeState(CurrentFSMState.OnFixedUpdate(), true);
         }
 
-        public void OnLateUpdate()
+        public void OnLateUpdate(bool IsFixedUpdateExecuted)
         {
-            CurrentFSMState.OnLateUpdate();
+            ChangeState(CurrentFSMState.OnLateUpdate(), IsFixedUpdateExecuted);
         }
 
         private void OnDestroy()
@@ -35,7 +35,7 @@ namespace FromChallenge
         }
 
 
-        private void ChangeState(FSMState newState)
+        private void ChangeState(FSMState newState, bool IsFixedUpdateExecuted)
         {
             if (newState == null || newState == CurrentFSMState)
             {
@@ -47,11 +47,23 @@ namespace FromChallenge
                 CurrentFSMState.OnExit();
             }
             CurrentFSMState = newState;
-            CurrentFSMState.OnEnter();
 
-            if (CurrentFSMState.UpdateTheSameFrameOfEnter)
+            var onEnterSwitchState = CurrentFSMState.OnEnter();
+            if (onEnterSwitchState != null)
             {
-                OnUpdate();
+                ChangeState(onEnterSwitchState, IsFixedUpdateExecuted);
+            }
+            else
+            {
+                if (CurrentFSMState.UpdateTheSameFrameOfEnter)
+                {
+                    OnUpdate(IsFixedUpdateExecuted);
+                }
+
+                if (CurrentFSMState.FixedUpdateTheSameFrameOfEnter && IsFixedUpdateExecuted)
+                {
+                    OnFixedUpdate();
+                }
             }
         }
     }

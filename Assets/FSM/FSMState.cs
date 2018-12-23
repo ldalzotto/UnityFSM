@@ -5,6 +5,7 @@ namespace FromChallenge
     public class FSMState : MonoBehaviour
     {
         public bool UpdateTheSameFrameOfEnter;
+        public bool FixedUpdateTheSameFrameOfEnter;
 
         public FSMActionWithConfiguration[] FSMEnterActions;
         public FSMActionWithConfiguration[] FSMUpdateActions;
@@ -14,21 +15,9 @@ namespace FromChallenge
 
         public FSMTransition[] FSMTransitions;
 
-        public void OnEnter()
+        public FSMState OnEnter()
         {
-            //  Debug.Log("Entering : " + gameObject.name);
-            if (FSMEnterActions != null)
-            {
-                foreach (var FSMAction in FSMEnterActions)
-                {
-                    FSMAction.FSMAction.ExecuteAction();
-                }
-            }
-        }
-
-        private void Awake()
-        {
-
+            return ProcessActionArrayWithTransitions(FSMEnterActions);
         }
 
         public FSMState OnUpdate()
