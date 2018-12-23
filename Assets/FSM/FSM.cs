@@ -8,7 +8,7 @@ namespace FromChallenge
 
         private FSMState CurrentFSMState;
 
-        private void Awake()
+        private void Start()
         {
             FSMEngine.Instance.AddFSM(this);
             ChangeState(StartingFSMState, false);
