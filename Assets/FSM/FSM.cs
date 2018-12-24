@@ -14,8 +14,8 @@ namespace FromChallenge
             try
             {
 #endif
-            ChangeState(StartingFSMState, false, false);
-            FSMEngine.Instance.AddFSM(this);
+                ChangeState(StartingFSMState, false, false);
+                FSMEngine.Instance.AddFSM(this);
 #if FSM_DEBUG
             }
             catch (FSMActionProcessingError e)
@@ -37,9 +37,9 @@ namespace FromChallenge
             try
             {
 #endif
-            CurrentFSMState.OnUpdate();
+                CurrentFSMState.OnUpdate();
 #if FSM_DEBUG
-        }
+            }
             catch (FSMActionProcessingError e)
             {
                 FSMDebugHelper.FSMActionProcessError(this, e);
@@ -58,14 +58,14 @@ namespace FromChallenge
             try
             {
 #endif
-            CurrentFSMState.OnFixedUpdate();
+                CurrentFSMState.OnFixedUpdate();
 #if FSM_DEBUG
-        }
+            }
             catch (FSMActionProcessingError e)
             {
 
                 FSMDebugHelper.FSMActionProcessError(this, e);
-        }
+            }
             catch (FSMTransitionProcessingError e)
             {
                 FSMDebugHelper.FSMTransitionProcessError(this, e);
@@ -79,13 +79,13 @@ namespace FromChallenge
             try
             {
 #endif
-            CurrentFSMState.OnLateUpdate();
+                CurrentFSMState.OnLateUpdate();
 #if FSM_DEBUG
-        }
+            }
             catch (FSMActionProcessingError e)
             {
                 FSMDebugHelper.FSMActionProcessError(this, e);
-        }
+            }
             catch (FSMTransitionProcessingError e)
             {
                 FSMDebugHelper.FSMTransitionProcessError(this, e);
@@ -144,11 +144,27 @@ namespace FromChallenge
                 if (CurrentFSMState.UpdateTheSameFrameOfEnter)
                 {
                     OnUpdate(IsFixedUpdateExecuted);
+                    var updateTransitionTriggered = CurrentFSMState.OnTransition();
+                    if (updateTransitionTriggered != null)
+                    {
+#if FSM_DEBUG
+                        FSMDebugHelper.FSMTransitionSuccessful(this, updateTransitionTriggered, "Enter");
+#endif
+                        ChangeState(updateTransitionTriggered.StateToMove, IsFixedUpdateExecuted, true);
+                    }
                 }
 
                 if (CurrentFSMState.FixedUpdateTheSameFrameOfEnter && IsFixedUpdateExecuted)
                 {
                     OnFixedUpdate();
+                    var fixedUpdateTransitionTriggered = CurrentFSMState.OnTransition();
+                    if (fixedUpdateTransitionTriggered != null)
+                    {
+#if FSM_DEBUG
+                        FSMDebugHelper.FSMTransitionSuccessful(this, fixedUpdateTransitionTriggered, "Enter");
+#endif
+                        ChangeState(fixedUpdateTransitionTriggered.StateToMove, IsFixedUpdateExecuted, true);
+                    }
                 }
             }
         }
