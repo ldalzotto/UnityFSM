@@ -40,8 +40,11 @@ namespace FromChallenge
             MessageDispatcher[FSMEventListener.GetType().ToString()] -= FSMEventListener.ReceiveMessage;
         }
 
-        public void SendMessage(object FSMEventMessage, string ListenerType)
+        public void SendMessage(object FSMEventMessage, string ListenerType, object caller)
         {
+#if FSM_DEBUG
+            FSMDebugHelper.FSMSendingMessage(caller);   
+#endif
             var listenerEvent = MessageDispatcher[ListenerType];
             if (listenerEvent != null)
             {

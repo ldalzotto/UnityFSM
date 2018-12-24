@@ -28,14 +28,24 @@ namespace FromChallenge
             FSMDebug.Instance.Write(FSMTransitionProcessingError.InnerException.StackTrace + Environment.NewLine + FSMTransitionProcessingError.StackTrace + Environment.NewLine);
         }
 
+        public static void FSMSendingMessage(object sender)
+        {
+            string lineToWrite = Format();
+            lineToWrite += (sender.GetType() + " has sended message.");
+            if (FSMDebug.Instance.FSMDebugConfiguration.WriteInFile)
+            {
+                FSMDebug.Instance.WriteLine(lineToWrite);
+            }
+            if (FSMDebug.Instance.FSMDebugConfiguration.WriteInConsole)
+            {
+                Debug.Log(lineToWrite);
+            }
+
+        }
+
         private static void FormatAndWriteLine(string line, FSM FSM)
         {
-            string lineToWrite = String.Format("{0:u}", DateTime.UtcNow) + " - ";
-
-            if (FSMDebug.Instance.FSMDebugConfiguration.DisplayFrameCount)
-            {
-                lineToWrite += "F(" + Time.frameCount + ") - ";
-            }
+            string lineToWrite = Format();
 
             lineToWrite += FSM.name + "/" + FSM.GetInstanceID() + " - " + line;
             if (FSMDebug.Instance.FSMDebugConfiguration.WriteInFile)
@@ -46,6 +56,18 @@ namespace FromChallenge
             {
                 Debug.Log(lineToWrite);
             }
+        }
+
+        private static string Format()
+        {
+            string lineToWrite = String.Format("{0:u}", DateTime.UtcNow) + " - ";
+
+            if (FSMDebug.Instance.FSMDebugConfiguration.DisplayFrameCount)
+            {
+                lineToWrite += "F(" + Time.frameCount + ") - ";
+            }
+
+            return lineToWrite;
         }
     }
 }
