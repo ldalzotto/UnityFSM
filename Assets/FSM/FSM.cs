@@ -14,8 +14,8 @@ namespace FromChallenge
             try
             {
 #endif
-                ChangeState(StartingFSMState, false, false);
-                FSMEngine.Instance.AddFSM(this);
+            ChangeState(StartingFSMState, false, false);
+            FSMEngine.Instance.AddFSM(this);
 #if FSM_DEBUG
             }
             catch (FSMActionProcessingError e)
@@ -37,7 +37,7 @@ namespace FromChallenge
             try
             {
 #endif
-                CurrentFSMState.OnUpdate();
+            CurrentFSMState.OnUpdate();
 #if FSM_DEBUG
             }
             catch (FSMActionProcessingError e)
@@ -58,7 +58,7 @@ namespace FromChallenge
             try
             {
 #endif
-                CurrentFSMState.OnFixedUpdate();
+            CurrentFSMState.OnFixedUpdate();
 #if FSM_DEBUG
             }
             catch (FSMActionProcessingError e)
@@ -79,7 +79,7 @@ namespace FromChallenge
             try
             {
 #endif
-                CurrentFSMState.OnLateUpdate();
+            CurrentFSMState.OnLateUpdate();
 #if FSM_DEBUG
             }
             catch (FSMActionProcessingError e)

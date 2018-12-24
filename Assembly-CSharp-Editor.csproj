@@ -60,8 +60,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Editor\FSMStateEditor.cs" />
-    <Compile Include="Assets\Editor\Helper\FoldableReordableList.cs" />
+    <Compile Include="Assets\Editor\FSM\FSMStateEditor.cs" />
+    <Compile Include="Assets\Editor\FSM\Helper\FoldableReordableList.cs" />
     <Reference Include="Unity.PackageManagerUI.Editor">
       <HintPath>C:/Users/Loic/Documents/projects/BoundToTheMoon/FSM/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
