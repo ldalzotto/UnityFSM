@@ -67,6 +67,9 @@
     <Compile Include="Assets\FSM\Engine\FSMEngineBehaviorProxy.cs" />
     <Compile Include="Assets\FSM\Error\FSMActionProcessingError.cs" />
     <Compile Include="Assets\FSM\Error\FSMTransitionProcessingError.cs" />
+    <Compile Include="Assets\FSM\Event\FSMEventListener.cs" />
+    <Compile Include="Assets\FSM\Event\FSMEventsManager.cs" />
+    <Compile Include="Assets\FSM\Event\FSMEventsManagerBehaviorProxy.cs" />
     <Compile Include="Assets\FSM\FSM.cs" />
     <Compile Include="Assets\FSM\FSMAction.cs" />
     <Compile Include="Assets\FSM\FSMState.cs" />
