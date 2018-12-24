@@ -16,24 +16,29 @@ namespace FromChallenge
 
         public FSMTransition[] FSMTransitions;
 
-        public FSMTransition OnEnter()
+        public void OnEnter()
         {
-            return ProcessActionArrayWithTransition(FSMEnterActions);
+            ProcessActionArray(FSMEnterActions);
         }
 
-        public FSMTransition OnUpdate()
+        public void OnUpdate()
         {
-            return ProcessActionWithConfigurationArrayWithTransitions(FSMUpdateActions);
+            ProcessActionWithConfigurationArray(FSMUpdateActions);
         }
 
-        public FSMTransition OnFixedUpdate()
+        public void OnFixedUpdate()
         {
-            return ProcessActionWithConfigurationArrayWithTransitions(FSMFixedActions);
+            ProcessActionWithConfigurationArray(FSMFixedActions);
         }
 
-        public FSMTransition OnLateUpdate()
+        public void OnLateUpdate()
         {
-            return ProcessActionWithConfigurationArrayWithTransitions(FSMLateUpdateActions);
+            ProcessActionWithConfigurationArray(FSMLateUpdateActions);
+        }
+
+        public FSMTransition OnTransition()
+        {
+            return ProcessTransitions();
         }
 
         public void OnExit()
@@ -56,68 +61,38 @@ namespace FromChallenge
             }
         }
 
-        private FSMTransition ProcessActionArrayWithTransition(FSMAction[] FSMActions)
+        private void ProcessActionArray(FSMAction[] FSMActions)
         {
-            if (FSMActions != null)
+            foreach (var FSMAction in FSMActions)
             {
-                foreach (var FSMAction in FSMActions)
+                try
                 {
-                    try
-                    {
-                        FSMAction.ExecuteAction();
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogException(e, this);
-                        throw FSMActionProcessingError.FromDetailedExecutionInformation(FSMAction.GetType().ToString(), e);
-                    }
-
+                    FSMAction.ExecuteAction();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e, this);
+                    throw FSMActionProcessingError.FromDetailedExecutionInformation(FSMAction.GetType().ToString(), e);
                 }
 
-                if (FSMActions.Length > 0)
-                {
-                    return ProcessTransitions();
-                }
             }
-
-            return null;
         }
 
-        private FSMTransition ProcessActionWithConfigurationArrayWithTransitions(FSMActionWithConfiguration[] FSMActions)
+        private void ProcessActionWithConfigurationArray(FSMActionWithConfiguration[] FSMActions)
         {
-            if (FSMActions != null)
+            foreach (var FSMAction in FSMActions)
             {
-                foreach (var FSMAction in FSMActions)
+                try
                 {
-                    try
-                    {
-                        FSMAction.FSMAction.ExecuteAction();
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogException(e, this);
-                        throw FSMActionProcessingError.FromDetailedExecutionInformation(FSMAction.GetType().ToString(), e);
-                    }
-
-                    if (FSMAction.ComputeTransitionConditions)
-                    {
-                        var stateToMove = ProcessTransitions();
-                        if (stateToMove != null)
-                        {
-                            return stateToMove;
-                        }
-                    }
+                    FSMAction.FSMAction.ExecuteAction();
                 }
-
-                if (FSMActions.Length > 0)
+                catch (Exception e)
                 {
-                    return ProcessTransitions();
+                    Debug.LogException(e, this);
+                    throw FSMActionProcessingError.FromDetailedExecutionInformation(FSMAction.GetType().ToString(), e);
                 }
             }
-
-            return null;
         }
-
 
         private FSMTransition ProcessTransitions()
         {
