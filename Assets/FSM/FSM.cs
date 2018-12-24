@@ -11,105 +11,107 @@ namespace FromChallenge
         private void Start()
         {
             FSMEngine.Instance.AddFSM(this);
+#if FSM_DEBUG
             try
             {
-                ChangeState(StartingFSMState, false);
+#endif
+            ChangeState(StartingFSMState, false);
+#if FSM_DEBUG
             }
             catch (FSMActionProcessingError e)
             {
-#if FSM_DEBUG
+
                 FSMDebugHelper.FSMActionProcessError(this, e);
-#endif
             }
             catch (FSMTransitionProcessingError e)
             {
-#if FSM_DEBUG
                 FSMDebugHelper.FSMTransitionProcessError(this, e);
-#endif
+
             }
+#endif
         }
 
         public void OnUpdate(bool IsFixedUpdateExecuted)
         {
+#if FSM_DEBUG
             try
             {
-                var transitionTriggered = CurrentFSMState.OnUpdate();
-                if (transitionTriggered != null)
-                {
-#if FSM_DEBUG
-                    FSMDebugHelper.FSMTransitionSuccessful(this, transitionTriggered, "Update");
 #endif
-                    ChangeState(transitionTriggered.StateToMove, IsFixedUpdateExecuted);
-                }
+            var transitionTriggered = CurrentFSMState.OnUpdate();
+            if (transitionTriggered != null)
+            {
+                ChangeState(transitionTriggered.StateToMove, IsFixedUpdateExecuted);
+#if FSM_DEBUG
+                FSMDebugHelper.FSMTransitionSuccessful(this, transitionTriggered, "Update");
+#endif
             }
+#if FSM_DEBUG
+        }
             catch (FSMActionProcessingError e)
             {
-#if FSM_DEBUG
                 FSMDebugHelper.FSMActionProcessError(this, e);
-#endif
             }
             catch (FSMTransitionProcessingError e)
             {
-#if FSM_DEBUG
                 FSMDebugHelper.FSMTransitionProcessError(this, e);
-#endif
-            }
 
+            }
+#endif
         }
 
         public void OnFixedUpdate()
         {
+#if FSM_DEBUG
             try
             {
-                var transitionTriggered = CurrentFSMState.OnFixedUpdate();
-                if (transitionTriggered != null)
-                {
+#endif
+            var transitionTriggered = CurrentFSMState.OnFixedUpdate();
+            if (transitionTriggered != null)
+            {
 #if FSM_DEBUG
                     FSMDebugHelper.FSMTransitionSuccessful(this, transitionTriggered, "FixedUpdate");
 #endif
-                    ChangeState(transitionTriggered.StateToMove, true);
-                }
+                ChangeState(transitionTriggered.StateToMove, true);
             }
+#if FSM_DEBUG
+        }
             catch (FSMActionProcessingError e)
             {
-#if FSM_DEBUG
+
                 FSMDebugHelper.FSMActionProcessError(this, e);
-#endif
-            }
+        }
             catch (FSMTransitionProcessingError e)
             {
-#if FSM_DEBUG
                 FSMDebugHelper.FSMTransitionProcessError(this, e);
-#endif
             }
+#endif
         }
 
         public void OnLateUpdate(bool IsFixedUpdateExecuted)
         {
+#if FSM_DEBUG
             try
             {
-                var transitionTriggered = CurrentFSMState.OnLateUpdate();
-                if (transitionTriggered != null)
-                {
+#endif
+            var transitionTriggered = CurrentFSMState.OnLateUpdate();
+            if (transitionTriggered != null)
+            {
 #if FSM_DEBUG
                     FSMDebugHelper.FSMTransitionSuccessful(this, transitionTriggered, "LateUpdate");
 #endif
-                    ChangeState(transitionTriggered.StateToMove, IsFixedUpdateExecuted);
-                }
+                ChangeState(transitionTriggered.StateToMove, IsFixedUpdateExecuted);
             }
+#if FSM_DEBUG
+        }
             catch (FSMActionProcessingError e)
             {
-#if FSM_DEBUG
                 FSMDebugHelper.FSMActionProcessError(this, e);
-#endif
-            }
+        }
             catch (FSMTransitionProcessingError e)
             {
-#if FSM_DEBUG
                 FSMDebugHelper.FSMTransitionProcessError(this, e);
-#endif
             }
-
+#endif
         }
 
         private void OnDestroy()

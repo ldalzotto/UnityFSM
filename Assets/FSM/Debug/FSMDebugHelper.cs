@@ -46,7 +46,6 @@ namespace FromChallenge
             {
                 Debug.Log(lineToWrite);
             }
-
         }
     }
 }
