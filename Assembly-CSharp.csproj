@@ -82,6 +82,7 @@
     <Compile Include="Assets\TimerFSMTest\Counting\CounterComponent.cs" />
     <Compile Include="Assets\TimerFSMTest\Counting\Transition\IsCounterThreshold.cs" />
     <Compile Include="Assets\TimerFSMTest\Counting\Transition\IsSwitchingScene.cs" />
+    <Compile Include="Assets\TimerFSMTest\DummyUpdate.cs" />
     <Compile Include="Assets\TimerFSMTest\SwitchScene\Action\Enter\SwitchSceneAction.cs" />
     <Compile Include="Assets\TimerFSMTest\Waiting\Actions\Enter\ElapsedTimeResetAction.cs" />
     <Compile Include="Assets\TimerFSMTest\Waiting\Actions\LateUpdate\DummyLateUpdateAction.cs" />

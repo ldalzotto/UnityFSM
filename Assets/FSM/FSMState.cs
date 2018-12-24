@@ -9,10 +9,10 @@ namespace FromChallenge
         public bool FixedUpdateTheSameFrameOfEnter;
 
         public FSMAction[] FSMEnterActions;
-        public FSMActionWithConfiguration[] FSMUpdateActions;
-        public FSMActionWithConfiguration[] FSMFixedActions;
-        public FSMActionWithConfiguration[] FSMLateUpdateActions;
-        public FSMActionWithConfiguration[] FSMExitActions;
+        public FSMAction[] FSMUpdateActions;
+        public FSMAction[] FSMFixedActions;
+        public FSMAction[] FSMLateUpdateActions;
+        public FSMAction[] FSMExitActions;
 
         public FSMTransition[] FSMTransitions;
 
@@ -49,7 +49,7 @@ namespace FromChallenge
                 {
                     try
                     {
-                        FSMAction.FSMAction.ExecuteAction();
+                        FSMAction.ExecuteAction();
                     }
                     catch (Exception e)
                     {
@@ -78,13 +78,13 @@ namespace FromChallenge
             }
         }
 
-        private void ProcessActionWithConfigurationArray(FSMActionWithConfiguration[] FSMActions)
+        private void ProcessActionWithConfigurationArray(FSMAction[] FSMActions)
         {
             foreach (var FSMAction in FSMActions)
             {
                 try
                 {
-                    FSMAction.FSMAction.ExecuteAction();
+                    FSMAction.ExecuteAction();
                 }
                 catch (Exception e)
                 {
@@ -116,12 +116,4 @@ namespace FromChallenge
         }
 
     }
-
-    [System.Serializable]
-    public class FSMActionWithConfiguration
-    {
-        public FSMAction FSMAction;
-        public bool ComputeTransitionConditions;
-    }
-
 }

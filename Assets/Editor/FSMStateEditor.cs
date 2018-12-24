@@ -24,32 +24,32 @@ namespace FromChallenge
                   DrawFSMAction(rect, element);
               });
 
-            UpdateActions = new FoldableReordableList(serializedObject, serializedObject.FindProperty("FSMUpdateActions"), true, true, true, true, "On Update Actions", 2f,
+            UpdateActions = new FoldableReordableList(serializedObject, serializedObject.FindProperty("FSMUpdateActions"), true, true, true, true, "On Update Actions", 1f,
             (Rect rect, int index, bool isActive, bool isFocused) =>
             {
                 var element = UpdateActions.serializedProperty.GetArrayElementAtIndex(index);
-                DrawFSmActionWithConfiguration(rect, element);
+                DrawFSMAction(rect, element);
             });
 
-            FixedActions = new FoldableReordableList(serializedObject, serializedObject.FindProperty("FSMFixedActions"), true, true, true, true, "On Fixed Update Actions", 2f,
+            FixedActions = new FoldableReordableList(serializedObject, serializedObject.FindProperty("FSMFixedActions"), true, true, true, true, "On Fixed Update Actions", 1f,
             (Rect rect, int index, bool isActive, bool isFocused) =>
             {
                 var element = FixedActions.serializedProperty.GetArrayElementAtIndex(index);
-                DrawFSmActionWithConfiguration(rect, element);
+                DrawFSMAction(rect, element);
             });
 
-            LateUpdateActions = new FoldableReordableList(serializedObject, serializedObject.FindProperty("FSMLateUpdateActions"), true, true, true, true, "On Late Update Actions", 2f,
+            LateUpdateActions = new FoldableReordableList(serializedObject, serializedObject.FindProperty("FSMLateUpdateActions"), true, true, true, true, "On Late Update Actions", 1f,
             (Rect rect, int index, bool isActive, bool isFocused) =>
             {
                 var element = LateUpdateActions.serializedProperty.GetArrayElementAtIndex(index);
-                DrawFSmActionWithConfiguration(rect, element);
+                DrawFSMAction(rect, element);
             });
 
-            ExitActions = new FoldableReordableList(serializedObject, serializedObject.FindProperty("FSMExitActions"), true, true, true, true, "On Exit Actions", 2f,
+            ExitActions = new FoldableReordableList(serializedObject, serializedObject.FindProperty("FSMExitActions"), true, true, true, true, "On Exit Actions", 1f,
               (Rect rect, int index, bool isActive, bool isFocused) =>
               {
                   var element = ExitActions.serializedProperty.GetArrayElementAtIndex(index);
-                  DrawFSmActionWithConfiguration(rect, element);
+                  DrawFSMAction(rect, element);
               });
 
             Transitions = new FoldableReordableList(serializedObject, serializedObject.FindProperty("FSMTransitions"), true, true, true, true, "State Transitions", 1f,
@@ -63,12 +63,6 @@ namespace FromChallenge
         private static void DrawFSMAction(Rect rect, SerializedProperty element)
         {
             EditorGUI.PropertyField(rect, element, GUIContent.none);
-        }
-
-        private static void DrawFSmActionWithConfiguration(Rect rect, SerializedProperty element)
-        {
-            EditorGUI.PropertyField(new Rect(rect.position, new Vector2(rect.width, (rect.height / 2) - 2)), element.FindPropertyRelative("FSMAction"), GUIContent.none);
-            EditorGUI.PropertyField(new Rect(rect.position + new Vector2(0, rect.height / 2), new Vector2(rect.width, rect.height / 2)), element.FindPropertyRelative("ComputeTransitionConditions"), new GUIContent("Compute transition conditions : ", "If this is true, then immediatly after selected action has been computed, all transitions in the 'State Transitions' field will be evaluated and may cause the FSM to switch FSMState. If FSMState is switched, then all following actions are skipped."));
         }
 
         public override void OnInspectorGUI()

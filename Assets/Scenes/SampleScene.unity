@@ -302,8 +302,7 @@ MonoBehaviour:
   FSMEnterActions:
   - {fileID: 655365830}
   FSMUpdateActions:
-  - FSMAction: {fileID: 655365829}
-    ComputeTransitionConditions: 0
+  - {fileID: 655365829}
   FSMFixedActions: []
   FSMLateUpdateActions: []
   FSMExitActions: []
@@ -432,8 +431,7 @@ MonoBehaviour:
   - {fileID: 715757446}
   - {fileID: 715757443}
   FSMUpdateActions:
-  - FSMAction: {fileID: 715757442}
-    ComputeTransitionConditions: 0
+  - {fileID: 715757442}
   FSMFixedActions: []
   FSMLateUpdateActions: []
   FSMExitActions: []
@@ -552,7 +550,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1091024237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -634,6 +632,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1529739829}
   - component: {fileID: 1529739828}
+  - component: {fileID: 1529739831}
   - component: {fileID: 1529739830}
   m_Layer: 0
   m_Name: SwitchingScene
@@ -659,7 +658,8 @@ MonoBehaviour:
   FSMEnterActions: []
   FSMUpdateActions: []
   FSMFixedActions: []
-  FSMLateUpdateActions: []
+  FSMLateUpdateActions:
+  - {fileID: 1529739831}
   FSMExitActions: []
   FSMTransitions: []
 --- !u!4 &1529739829
@@ -686,6 +686,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 282bb54f76db18a4684dde9693d6138e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1529739831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529739827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e95cbb2005a8d624fb70cdc03f1611a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1579156813
@@ -724,8 +736,7 @@ MonoBehaviour:
   FixedUpdateTheSameFrameOfEnter: 0
   FSMEnterActions: []
   FSMUpdateActions:
-  - FSMAction: {fileID: 1579156817}
-    ComputeTransitionConditions: 0
+  - {fileID: 1579156817}
   FSMFixedActions: []
   FSMLateUpdateActions: []
   FSMExitActions: []
@@ -801,7 +812,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1617605953
 Transform:
   m_ObjectHideFlags: 0

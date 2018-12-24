@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d6abaf33720776449196928488a8408, type: 3}
   m_Name: DebugConfiguration
   m_EditorClassIdentifier: 
-  WriteInFile: 1
+  WriteInFile: 0
   RelativeLogPath: /Logs/Debug.txt
   WriteInConsole: 1
   DisplayFrameCount: 1
