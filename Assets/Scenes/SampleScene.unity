@@ -550,7 +550,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1091024237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,6 +563,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a3290b5d6f70c46b1d4fc3ab2a8b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FSMDebugConfiguration: {fileID: 11400000, guid: 9b89ed168c195ef4bb7059301954ac03,
+    type: 2}
 --- !u!4 &1091024238
 Transform:
   m_ObjectHideFlags: 0
@@ -655,11 +657,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UpdateTheSameFrameOfEnter: 0
   FixedUpdateTheSameFrameOfEnter: 0
-  FSMEnterActions: []
+  FSMEnterActions:
+  - {fileID: 1529739830}
   FSMUpdateActions: []
   FSMFixedActions: []
-  FSMLateUpdateActions:
-  - {fileID: 1529739831}
+  FSMLateUpdateActions: []
   FSMExitActions: []
   FSMTransitions: []
 --- !u!4 &1529739829
@@ -812,7 +814,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1617605953
 Transform:
   m_ObjectHideFlags: 0

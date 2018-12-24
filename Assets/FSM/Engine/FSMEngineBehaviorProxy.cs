@@ -9,12 +9,22 @@ namespace FromChallenge
         public FSMDebugConfiguration FSMDebugConfiguration;
 #endif
 
+        private static FSMEngineBehaviorProxy Instance = null;
+
         private void Awake()
         {
-
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(this);
 #if FSM_DEBUG
-            InitializeLog();
+                InitializeLog();
 #endif
+            }
+            else
+            {
+                Destroy(this);
+            }
         }
 
         private void Update()
