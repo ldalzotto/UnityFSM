@@ -114,22 +114,19 @@ namespace FromChallenge
             if (CurrentFSMState != null)
             {
                 CurrentFSMState.OnExit();
-                if (updateElligible)
-                {
-                    FSMEngine.Instance.RemoveElligibleFSM(this);
-                }
-
             }
+
+            if (updateElligible)
+            {
+                FSMEngine.Instance.UpdateElligibleFSM(ref CurrentFSMState, ref newState, this);
+            }
+
             CurrentFSMState = newState;
 
 #if FSM_DEBUG
             FSMDebugHelper.EnterStateLog(this, newState);
 #endif
             CurrentFSMState.OnEnter();
-            if (updateElligible)
-            {
-                FSMEngine.Instance.AddElligibleFSM(this);
-            }
 
             var transitionTriggered = CurrentFSMState.OnTransition();
             if (transitionTriggered != null)

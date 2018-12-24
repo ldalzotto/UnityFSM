@@ -42,7 +42,7 @@ namespace FromChallenge
             AddElligibleFSM(FSM);
         }
 
-        public void AddElligibleFSM(FSM FSM)
+        private void AddElligibleFSM(FSM FSM)
         {
             if (FSM.CurrentFSMState.FSMUpdateActions.Length > 0)
             {
@@ -64,11 +64,73 @@ namespace FromChallenge
             RemoveElligibleFSM(FSM);
         }
 
-        public void RemoveElligibleFSM(FSM FSM)
+        private void RemoveElligibleFSM(FSM FSM)
         {
             FSMUpdateElligible.Remove(FSM.GetInstanceID());
             FSMFixedUpdateElligible.Remove(FSM.GetInstanceID());
             FSMLateUpdateElligible.Remove(FSM.GetInstanceID());
+        }
+
+        public void UpdateElligibleFSM(ref FSMState OldFSMState, ref FSMState NewFSMState, FSM FSM)
+        {
+            if (OldFSMState == null)
+            {
+                FSMUpdateElligible.Add(FSM.GetInstanceID(), FSM);
+                FSMFixedUpdateElligible.Add(FSM.GetInstanceID(), FSM);
+                FSMLateUpdateElligible.Add(FSM.GetInstanceID(), FSM);
+            }
+            else
+            {
+                if (NewFSMState.FSMUpdateActions.Length > 0)
+                {
+                    if (OldFSMState.FSMUpdateActions.Length == 0)
+                    {
+                        FSMUpdateElligible.Add(FSM.GetInstanceID(), FSM);
+                    }
+                }
+                else
+                {
+                    if (OldFSMState.FSMUpdateActions.Length > 0)
+                    {
+                        FSMUpdateElligible.Remove(FSM.GetInstanceID());
+                    }
+                }
+
+
+                if (NewFSMState.FSMFixedActions.Length > 0)
+                {
+                    if (OldFSMState.FSMFixedActions.Length == 0)
+                    {
+                        FSMFixedUpdateElligible.Add(FSM.GetInstanceID(), FSM);
+                    }
+                }
+                else
+                {
+                    if (OldFSMState.FSMFixedActions.Length > 0)
+                    {
+                        FSMFixedUpdateElligible.Remove(FSM.GetInstanceID());
+                    }
+                }
+
+
+
+                if (NewFSMState.FSMLateUpdateActions.Length > 0)
+                {
+                    if (OldFSMState.FSMLateUpdateActions.Length == 0)
+                    {
+                        FSMLateUpdateElligible.Add(FSM.GetInstanceID(), FSM);
+                    }
+                }
+                else
+                {
+                    if (OldFSMState.FSMLateUpdateActions.Length > 0)
+                    {
+                        FSMLateUpdateElligible.Remove(FSM.GetInstanceID());
+                    }
+                }
+
+
+            }
         }
 
         public void FixedUpdateAll()
