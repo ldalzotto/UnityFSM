@@ -42,12 +42,12 @@ namespace FromChallenge
             FSMEngine.Instance.LateUpdateAll();
         }
 
-        private void OnDestroy()
-        {
 #if FSM_DEBUG
+        private void OnApplicationQuit()
+        {
             FSMDebug.Instance.CloseWriteStream();
-#endif
         }
+#endif
 
         private void InitializeLog()
         {
