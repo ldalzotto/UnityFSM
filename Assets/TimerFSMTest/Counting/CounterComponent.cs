@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CounterComponent : FromChallenge.FSMVariableContainer
+public class CounterComponent : MonoBehaviour
 {
     public int TargetCount;
     public int IncrementDelta;

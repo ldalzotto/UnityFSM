@@ -18,27 +18,39 @@ namespace FromChallenge
 
         public static void FSMActionProcessError(FSM FSM, FSMActionProcessingError FSMActionProcessingError)
         {
-            FormatAndWriteLine(FSMActionProcessingError.Message, FSM);
-            FSMDebug.Instance.Write(FSMActionProcessingError.InnerException.StackTrace + Environment.NewLine + FSMActionProcessingError.StackTrace + Environment.NewLine);
+            if (FSMDebug.Instance.FSMDebugConfiguration.WriteInFile)
+            {
+                FormatAndWriteLine(FSMActionProcessingError.Message, FSM);
+                FSMDebug.Instance.Write(FSMActionProcessingError.InnerException.StackTrace + Environment.NewLine + FSMActionProcessingError.StackTrace + Environment.NewLine);
+            }
         }
 
         public static void FSMTransitionProcessError(FSM FSM, FSMTransitionProcessingError FSMTransitionProcessingError)
         {
-            FormatAndWriteLine(FSMTransitionProcessingError.Message, FSM);
-            FSMDebug.Instance.Write(FSMTransitionProcessingError.InnerException.StackTrace + Environment.NewLine + FSMTransitionProcessingError.StackTrace + Environment.NewLine);
-        }
 
-        public static void FSMSendingMessage(object sender)
-        {
-            string lineToWrite = Format();
-            lineToWrite += (sender.GetType() + " has sended message.");
             if (FSMDebug.Instance.FSMDebugConfiguration.WriteInFile)
             {
-                FSMDebug.Instance.WriteLine(lineToWrite);
+                FormatAndWriteLine(FSMTransitionProcessingError.Message, FSM);
+                FSMDebug.Instance.Write(FSMTransitionProcessingError.InnerException.StackTrace + Environment.NewLine + FSMTransitionProcessingError.StackTrace + Environment.NewLine);
             }
-            if (FSMDebug.Instance.FSMDebugConfiguration.WriteInConsole)
+        }
+
+        public static void FSMSendingMessage(GameObject sender, object caller)
+        {
+            string lineToWrite = Format();
+            lineToWrite += sender.name + "/" + sender.GetInstanceID() + " - ";
+            lineToWrite += ("Message from " + caller.GetType().ToString() + " sended.");
+            WriteToDebug(lineToWrite);
+        }
+
+        public static void ReceivingMessageError(FSMEventListener FSMEventListener, Exception InitialError)
+        {
+            if (FSMDebug.Instance.FSMDebugConfiguration.WriteInFile)
             {
-                Debug.Log(lineToWrite);
+                string lineToWrite = Format();
+                lineToWrite += FSMEventListener.name + "/" + FSMEventListener.GetInstanceID() + " - ";
+                lineToWrite += ("ERROR - Event listener has received a message but has failed to process : " + InitialError.Message + Environment.NewLine + InitialError.StackTrace);
+                FSMDebug.Instance.Write(lineToWrite);
             }
 
         }
@@ -48,6 +60,11 @@ namespace FromChallenge
             string lineToWrite = Format();
 
             lineToWrite += FSM.name + "/" + FSM.GetInstanceID() + " - " + line;
+            WriteToDebug(lineToWrite);
+        }
+
+        private static void WriteToDebug(string lineToWrite)
+        {
             if (FSMDebug.Instance.FSMDebugConfiguration.WriteInFile)
             {
                 FSMDebug.Instance.WriteLine(lineToWrite);

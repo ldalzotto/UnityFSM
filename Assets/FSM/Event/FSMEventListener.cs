@@ -1,12 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 namespace FromChallenge
 {
     public abstract class FSMEventListener : MonoBehaviour
     {
 
-        public abstract void ReceiveMessage(object FSMEventMessage);
+        public void ReceiveMessage(object FSMEventMessage)
+        {
+            try
+            {
+                MessageHandling(FSMEventMessage);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+#if FSM_DEBUG
+                FSMDebugHelper.ReceivingMessageError(this, e);
+#endif
+            }
+
+        }
+
+        public abstract void MessageHandling(object FSMEventMessage);
 
         private void OnEnable()
         {
